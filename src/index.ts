@@ -42,6 +42,14 @@ app.patch('/:entryId', async (req, res) => {
   res.json({ entry });
 });
 
+app.delete('/:entryId', async (req, res) => {
+  const { entryId } = req.params;
+
+  const removedEntry = await Entry.findByIdAndDelete(entryId.trim());
+  if(!removedEntry) return res.json({error: 'Entry not found'});
+  res.json({message: 'Entry removed successfully'});
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
 });
