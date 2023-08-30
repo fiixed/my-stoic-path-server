@@ -27,6 +27,21 @@ app.post('/create', async (req, res) => {
   res.json({ message: 'entry created' });
 });
 
+app.patch('/:entryId', async (req, res) => {
+  const { entryId } = req.params;
+
+  const { description } = req.body as IncomingBody;
+
+  const entry = await Entry.findByIdAndUpdate(
+    entryId.trim(),
+    { description },
+    { new: true }
+  );
+  if (!entry) return res.json({ error: 'Entry not found' });
+
+  res.json({ entry });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
 });
