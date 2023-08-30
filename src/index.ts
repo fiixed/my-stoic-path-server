@@ -1,6 +1,6 @@
 import express from 'express';
 import './db';
-import Entry from './models/entry';
+import Entry, { EntryDocument } from './models/entry';
 
 const app = express();
 
@@ -15,9 +15,14 @@ app.post('/', (req, res) => {
   res.json({ message: 'I am listening' });
 });
 
+interface IncomingBody {
+  description: string;
+}
+
 app.post('/create', async (req, res) => {
-  const newEntry = new Entry({ description: req.body.description });
-  await newEntry.save();
+  await Entry.create<EntryDocument>({
+    description: (req.body as IncomingBody).description,
+  });
 
   res.json({ message: 'entry created' });
 });

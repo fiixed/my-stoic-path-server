@@ -1,5 +1,9 @@
 import { Schema, model } from 'mongoose';
 
+export interface EntryDocument {
+  description: string;
+}
+
 const entrySchema = new Schema(
   {
     description: {
@@ -11,4 +15,4 @@ const entrySchema = new Schema(
   { timestamps: true }
 );
 
-export default model('Entry', entrySchema);
+export default model<EntryDocument>('Entry', entrySchema);
