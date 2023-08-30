@@ -4,7 +4,7 @@
   "description": "This is the server for the my stoic path app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsnd --respawn --pretty --transpile-only ./src/index.ts"
   },
   "author": "Andrew Sherrod",
   "license": "ISC",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
-    "@types/node": "^20.5.7"
+    "@types/node": "^20.5.7",
+    "ts-node-dev": "^2.0.0"
   }
 }
