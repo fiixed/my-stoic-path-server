@@ -19,6 +19,18 @@ interface IncomingBody {
   description: string;
 }
 
+app.get('/', async (req, res) => {
+  const entries = await Entry.find();
+  res.json({ entries });
+});
+
+app.get('/:entryId', async (req, res) => {
+  const { entryId } = req.params;
+  const entry = await Entry.findById(entryId.trim());
+  if(!entry) return res.json({error: 'Entry not found'});
+  res.json({ entry });
+});
+
 app.post('/create', async (req, res) => {
   await Entry.create<EntryDocument>({
     description: (req.body as IncomingBody).description,
@@ -46,8 +58,8 @@ app.delete('/:entryId', async (req, res) => {
   const { entryId } = req.params;
 
   const removedEntry = await Entry.findByIdAndDelete(entryId.trim());
-  if(!removedEntry) return res.json({error: 'Entry not found'});
-  res.json({message: 'Entry removed successfully'});
+  if (!removedEntry) return res.json({ error: 'Entry not found' });
+  res.json({ message: 'Entry removed successfully' });
 });
 
 app.listen(PORT, () => {
