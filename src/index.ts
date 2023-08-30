@@ -13,6 +13,14 @@ app.post('/', (req, res) => {
   res.json({ message: 'I am listening' });
 });
 
+app.post('/create', (req, res) => {
+  console.log(req.body);
+
+  res.json({ message: 'entry created' });
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
 });
