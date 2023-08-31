@@ -2,6 +2,8 @@ import { Schema, model } from 'mongoose';
 
 export interface EntryDocument {
   description: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const entrySchema = new Schema(

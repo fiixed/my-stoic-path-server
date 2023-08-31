@@ -1,16 +1,17 @@
-import { RequestHandler } from "express";
+const mongoose = require('mongoose');
+import { RequestHandler } from 'express';
 import Entry, { EntryDocument } from '../models/entry';
+import { log } from 'console';
 
 export interface IncomingBody {
   description: string;
 }
 
 export const createEntry: RequestHandler = async (req, res) => {
-  await Entry.create<EntryDocument>({
+  const newEntry = await Entry.create<EntryDocument>({
     description: (req.body as IncomingBody).description,
   });
-
-  res.json({ message: 'entry created' });
+  res.json({ entry: { id: newEntry._id, timestamp: newEntry.updatedAt } });
 };
 
 export const updateEntry: RequestHandler = async (req, res) => {
