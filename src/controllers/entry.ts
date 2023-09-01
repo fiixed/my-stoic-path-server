@@ -11,7 +11,13 @@ export const createEntry: RequestHandler = async (req, res) => {
   const newEntry = await Entry.create<EntryDocument>({
     description: (req.body as IncomingBody).description,
   });
-  res.json({ entry: { id: newEntry._id, timestamp: newEntry.updatedAt } });
+  res.json({
+    entry: {
+      id: newEntry._id,
+      description: newEntry.description,
+      timestamp: newEntry.updatedAt,
+    },
+  });
 };
 
 export const updateEntry: RequestHandler = async (req, res) => {
@@ -39,7 +45,15 @@ export const deleteEntry: RequestHandler = async (req, res) => {
 
 export const getAllEntries: RequestHandler = async (req, res) => {
   const entries = await Entry.find();
-  res.json({ entries });
+  res.json({
+    entries: entries.map((entry) => {
+      return {
+        id: entry._id,
+        description: entry.description,
+        timestamp: entry.updatedAt,
+      };
+    }),
+  });
 };
 
 export const getSingleEntry: RequestHandler = async (req, res) => {
