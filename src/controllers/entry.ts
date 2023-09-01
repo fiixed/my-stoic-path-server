@@ -32,7 +32,13 @@ export const updateEntry: RequestHandler = async (req, res) => {
   );
   if (!entry) return res.json({ error: 'Entry not found' });
 
-  res.json({ entry });
+  res.json({
+    entry: {
+      id: entry._id,
+      description: entry.description,
+      timestamp: entry.updatedAt,
+    },
+  });
 };
 
 export const deleteEntry: RequestHandler = async (req, res) => {
